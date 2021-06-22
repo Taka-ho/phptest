@@ -17,7 +17,7 @@
 $curl = curl_init();
 
 curl_setopt_array($curl, [
-	CURLOPT_URL => "https://weatherbit-v1-mashape.p.rapidapi.com/current?lon=38.5&lat=-78.5",
+	CURLOPT_URL => "https://weatherbit-v1-mashape.p.rapidapi.com/forecast/3hourly?lat=33.590188&lon=130.420685",
 	CURLOPT_RETURNTRANSFER => true,
 	CURLOPT_FOLLOWLOCATION => true,
 	CURLOPT_ENCODING => "",
