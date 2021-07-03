@@ -15,10 +15,9 @@
   </tr>
   <tr>
     <th>
-      <?php echo get_json("icon"); ?>
-      <?php echo get_json("weather"); ?>
     </th>
-    <th><?php echo get_json("temp"); ?>℃</th>
+	<img src="https://openweathermap.org/img/wn/10n@2x.png">
+
   </tr>
 </table>
 </body>
@@ -27,34 +26,22 @@
 
 <?php
 
+$weatherTranslate = array(
+    'Clear' => '晴れ',
+    'Clouds' => 'くもり',
+    'Rain' => '雨',
+    'Drizzle' => '霧雨',
+    'Thunderstorm' => '雷雨',
+    'Snow' => '雪'
+);
 
-	function get_json( $type = null ){
-		$city = "Fukuoka,jp";
-		$appid = "54165a9d0cce877d4ac45f1314da081d";
-		$url = "https://api.openweathermap.org/data/2.5/forecast?lat=33.590188&lon=130.420685&APPID=54165a9d0cce877d4ac45f1314da081d&lang=ja&units=metric" . $city . "&units=metric&APPID=" . $appid;
-	  
-		$json = file_get_contents( $url );
-		$json = mb_convert_encoding( $json, 'UTF8', 'ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN' );
-		$json_decode = json_decode( $json );
-	  
-		//現在の天気
-		if( $type  === "weather" ):
-		  $out = $json_decode->weather[0]->main;
-	  
-		//現在の天気アイコン
-		elseif( $type === "icon" ):
-		  $out = "<img src='https://openweathermap.org/img/wn/" . $json_decode->weather[0]->icon . "@2x.png'>";
-	  
-		//現在の気温
-		elseif( $type  === "temp" ):
-		  $out = $json_decode->main->temp;
-	  
-		//パラメータがないときは配列を出力
-		else:
-		  $out = $json_decode;
-	  
-		endif;
-	  
-		return $out;
-	  }
+	$weather_config = array(
+		'appid' => '',
+		'lat' => '33.590188',
+		'lon' => '130.420685',
+	);
+	$weather_json = file_get_contents('http://api.openweathermap.org/data/2.5/weather?lat=' . $weather_config['lat'] . '&lon=' . $weather_config['lon'] . '&units=metric&lang=ja&APPID=' . $weather_config['appid']);
+	$weather_array = json_decode($weather_json, true);
+
+
 ?>
