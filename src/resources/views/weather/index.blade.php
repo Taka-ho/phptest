@@ -8,37 +8,40 @@
 </head>
 <body>
 
+<table border>
+  <tr>
+    <th>天気</th>
+    <th>気温</th>
+  </tr>
+  <tr>
+    <th>
+    </th>
+	<img src="https://openweathermap.org/img/wn/10n@2x.png">
+
+  </tr>
+</table>
 </body>
 </html>
 
 
 <?php
 
-$curl = curl_init();
+$weatherTranslate = array(
+    'Clear' => '晴れ',
+    'Clouds' => 'くもり',
+    'Rain' => '雨',
+    'Drizzle' => '霧雨',
+    'Thunderstorm' => '雷雨',
+    'Snow' => '雪'
+);
 
-curl_setopt_array($curl, [
-	CURLOPT_URL => "https://weatherbit-v1-mashape.p.rapidapi.com/current?lon=38.5&lat=-78.5",
-	CURLOPT_RETURNTRANSFER => true,
-	CURLOPT_FOLLOWLOCATION => true,
-	CURLOPT_ENCODING => "",
-	CURLOPT_MAXREDIRS => 10,
-	CURLOPT_TIMEOUT => 30,
-	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-	CURLOPT_CUSTOMREQUEST => "GET",
-	CURLOPT_HTTPHEADER => [
-		"x-rapidapi-host: weatherbit-v1-mashape.p.rapidapi.com",
-		"x-rapidapi-key: db004da657mshb99490456ef13fap1d4076jsne070866ba767"
-	],
-]);
+	$weather_config = array(
+		'appid' => '',
+		'lat' => '33.590188',
+		'lon' => '130.420685',
+	);
+	$weather_json = file_get_contents('http://api.openweathermap.org/data/2.5/weather?lat=' . $weather_config['lat'] . '&lon=' . $weather_config['lon'] . '&units=metric&lang=ja&APPID=' . $weather_config['appid']);
+	$weather_array = json_decode($weather_json, true);
 
-$response = curl_exec($curl);
-$err = curl_error($curl);
 
-curl_close($curl);
-
-if ($err) {
-	echo "cURL Error #:" . $err;
-} else {
-	echo $response;
-}
 ?>
